@@ -26,6 +26,7 @@
     "id-length": "off",
     "sort-imports": "off",
     "import/order": "off",
+    "class-methods-use-this": "off",
     "no-debugger": "off",
     "no-console": "off",
     "no-ternary": "off",

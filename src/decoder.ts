@@ -42,7 +42,9 @@ export const decodeArrayBuffer = async (
     unk: view.getUint32(12, true),
   }
   if (buf.byteLength < header.stringTableOffset + header.stringTableSize)
-    throw new RangeError('the given file is too small')
+    throw new RangeError(
+      'The given file is too small than declared in the header'
+    )
 
   const stringTableBlob = new Uint8Array(
     buf,

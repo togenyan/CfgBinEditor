@@ -36,12 +36,12 @@ const slice = createSlice({
       isError: false,
       isLoading: false,
     }))
-    builder.addCase(loadFile.rejected, (state) => ({
+    builder.addCase(loadFile.rejected, (state, action) => ({
       ...state,
       isLoaded: false,
       isError: true,
       isLoading: false,
-      msg: 'Cannot load the file',
+      msg: action.error.message ?? 'Unknown Error',
     }))
   },
 })

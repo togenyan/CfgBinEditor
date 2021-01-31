@@ -79,11 +79,12 @@ const App = (): JSX.Element => {
                 <CircularProgress />
               </Box>
             ) : !isLoaded ? (
-              <Dropzone />
-            ) : isError ? (
-              <Snackbar>
-                <Alert severity='error'>{msg}</Alert>
-              </Snackbar>
+              <>
+                <Snackbar open={isError}>
+                  <Alert severity='error'>{msg}</Alert>
+                </Snackbar>
+                <Dropzone />
+              </>
             ) : (
               <></>
             )
