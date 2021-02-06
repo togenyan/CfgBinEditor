@@ -30,6 +30,7 @@
     "no-debugger": "off",
     "no-console": "off",
     "no-ternary": "off",
+    "no-bitwise": "off",
     "no-nested-ternary": "off",
     "no-negated-condition": "off",
     "max-statements": "off",

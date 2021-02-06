@@ -17,6 +17,7 @@ import type { AlertProps } from '@material-ui/lab/Alert'
 import MuiAlert from '@material-ui/lab/Alert'
 import React from 'react'
 
+import { DataCardContainer } from './DataTable'
 import { Dropzone } from './Loader'
 import { useTypedSelector } from './store'
 
@@ -29,6 +30,15 @@ const useStyles = makeStyles({
   },
   alignCenter: {
     textAlign: 'center',
+  },
+  centeredBox: {
+    margin: 'auto',
+    padding: '20px',
+    position: 'relative',
+    textAlign: 'center',
+    top: '50%',
+    transform: 'translate(0, -50%)',
+    width: '40vw',
   },
 })
 
@@ -47,7 +57,6 @@ const Alert = (props: AlertProps): JSX.Element => (
 
 const App = (): JSX.Element => {
   const classes = useStyles()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, isError, isLoaded, isLoading, msg } = useTypedSelector(
     (state) => ({
       data: state.data,
@@ -59,9 +68,9 @@ const App = (): JSX.Element => {
   )
   return (
     <ThemeProvider theme={theme}>
-      <Grid container direction='column' style={{ height: '100vh' }}>
+      <Grid container direction='column' style={{ height: '100vh', flexWrap: 'nowrap' }}>
         <Grid item>
-          <AppBar position='static'>
+          <AppBar position='static' style={{ width: '100vw'}}>
             <Toolbar>
               <Typography variant='h6' component='h1' className={classes.title}>
                 Config Editor
@@ -73,22 +82,21 @@ const App = (): JSX.Element => {
           </AppBar>
         </Grid>
         <Grid item className={classes.main}>
-          {
-            isLoading ? (
-              <Box className={classes.alignCenter}>
-                <CircularProgress />
-              </Box>
-            ) : !isLoaded ? (
-              <>
-                <Snackbar open={isError}>
-                  <Alert severity='error'>{msg}</Alert>
-                </Snackbar>
+          {isLoading ? (
+            <Box className={classes.centeredBox}>
+              <CircularProgress />
+            </Box>
+          ) : !isLoaded ? (
+            <>
+              <Snackbar open={isError}>
+                <Alert severity='error'>{msg}</Alert>
+              </Snackbar>
+              <Box className={classes.centeredBox}>
                 <Dropzone />
-              </>
-            ) : (
-              <></>
-            )
-            /* : <DataTable data={decodeArrayBuffer(data)}}> */
+              </Box>
+            </>
+          ) : data !== undefined ? <DataCardContainer data={data} />
+          : <></>
           }
         </Grid>
       </Grid>

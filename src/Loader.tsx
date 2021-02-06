@@ -17,7 +17,6 @@ const useStyles = makeStyles({
     position: 'relative',
     textAlign: 'center',
     top: '50%',
-    transform: 'translate(0, -50%)',
     width: '40vw',
   },
 })

@@ -12,13 +12,15 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
-    "next": "^10.0.6",
+    "material-table": "^1.69.2",
+    "next": "^9",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.2.4",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "worker-plugin": "^5.0.0"
   },
   "scripts": {
     "dev": "next dev",

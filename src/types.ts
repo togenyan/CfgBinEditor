@@ -1,6 +1,6 @@
 export interface CfgBinFile {
   header: Header
-  codes: Code[]
+  codes: CodeGroup[]
   stringTable: StringTable
   keyTable: KeyTable
   footer: Footer
@@ -13,30 +13,37 @@ export interface Header {
   unk: number
 }
 
+export interface CodeGroup {
+  crc32: number
+  columns: ValueTag[]
+  codes: Code[]
+}
+
 export interface Code {
   crc32: number
   values: Value[]
 }
 
 export type Value = FloatValue | IntValue | StringPointerValue | UnknownValue
+export type ValueTag = Value['tag']
 
 export interface IntValue {
-  tag: 0
+  tag: "int"
   value: number
 }
 
 export interface FloatValue {
-  tag: 1
+  tag: "float"
   value: number
 }
 
 export interface StringPointerValue {
-  tag: 2
+  tag: "string"
   value: number
 }
 
 export interface UnknownValue {
-  tag: 3
+  tag: "unknown"
   value: number
 }
 

@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { decodeArrayBuffer } from './decoder'
+import { decodeWorker } from './worker'
 
 export const loadFile = createAsyncThunk(
   'cfgEditorApp/loadFile',
   async (file: File) => {
-    return decodeArrayBuffer(await file.arrayBuffer())
+    return decodeWorker(await file.arrayBuffer())
   }
 )
