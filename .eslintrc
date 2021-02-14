@@ -27,8 +27,6 @@
     "sort-imports": "off",
     "import/order": "off",
     "class-methods-use-this": "off",
-    "no-debugger": "off",
-    "no-console": "off",
     "no-ternary": "off",
     "no-bitwise": "off",
     "no-nested-ternary": "off",

@@ -4,6 +4,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 module.exports = withBundleAnalyzer({
+  basePath: '/Yokai/cfgbineditor',
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true

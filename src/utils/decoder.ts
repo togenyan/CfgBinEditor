@@ -52,7 +52,6 @@ const parseCodes = (buf: ArrayBuffer, codeCount: number): CodeGroup[] => {
         })
         pos += 4
       }
-      // Debugger
       if (
         i > 0 &&
         (prevParamTypes.length !== paramTypes.length ||
