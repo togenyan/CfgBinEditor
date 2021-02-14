@@ -7,7 +7,7 @@ import type {
   StringTable,
   Value,
   ValueTag,
-} from '../types.ts'
+} from '../types'
 
 const roundUp = (n: number, exp: number): number => Math.ceil(n / exp) * exp
 
@@ -82,7 +82,7 @@ const parseStringTable = (buf: ArrayBuffer): StringTable => {
     fatal: true,
   })
   const arr = new Uint8Array(buf)
-  const stringTable = {} as StringTable
+  const stringTable: StringTable = {}
   let strBuf = [] as Array<number>
   let lastOffset = 0
   for (const [idx, val] of arr.entries()) {
@@ -105,7 +105,7 @@ const parseKeyTable = (buf: ArrayBuffer): KeyTable => {
     fatal: true,
   })
   const view = new DataView(buf)
-  const keyTable = {} as KeyTable
+  const keyTable: KeyTable = {}
   const keyCount = view.getUint32(4, true)
   const keyStringOffset = view.getUint32(8, true)
   const keyStringLength = view.getUint32(12, true)

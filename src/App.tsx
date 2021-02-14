@@ -13,13 +13,18 @@ import Snackbar from '@material-ui/core/Snackbar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import InfoIcon from '@material-ui/icons/Info'
+import SaveIcon from '@material-ui/icons/Save'
+import CloseIcon from '@material-ui/icons/Close'
 import type { AlertProps } from '@material-ui/lab/Alert'
 import MuiAlert from '@material-ui/lab/Alert'
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import { DataCardContainer } from './DataTable'
 import { Dropzone } from './Loader'
 import { useTypedSelector } from './store'
+import { useDispatch } from 'react-redux'
+import { updateCodeGroup, closeFile, saveFile } from './actions'
+import type { RowType } from './types'
 
 const useStyles = makeStyles({
   main: {
@@ -66,15 +71,32 @@ const App = (): JSX.Element => {
       msg: state.msg,
     })
   )
+  const dispatch = useDispatch()
+  const dataChangeHandler = useCallback((codeGroupIdx: number, rowIdx: number, data: RowType): void => {
+    // convert RowType (the data stored in the datagrid) back to CfgbBnFile.
+    dispatch(updateCodeGroup({
+      codeGroupIdx,
+      rowIdx,
+      data,
+    }))
+  }, [])
+  const closeHandler = useCallback(() => dispatch(closeFile()), [])
+  const saveHandler = useCallback(() => dispatch(saveFile()), [])
   return (
     <ThemeProvider theme={theme}>
       <Grid container direction='column' style={{ height: '100vh', flexWrap: 'nowrap' }}>
         <Grid item>
-          <AppBar position='static' style={{ width: '100vw'}}>
+          <AppBar position='static' style={{ width: '100vw' }}>
             <Toolbar>
               <Typography variant='h6' component='h1' className={classes.title}>
                 Config Editor
               </Typography>
+              <IconButton color='inherit' disabled={!isLoaded} onClick={saveHandler}>
+                <SaveIcon />
+              </IconButton>
+              <IconButton color='inherit' disabled={!isLoaded} onClick={closeHandler}>
+                <CloseIcon />
+              </IconButton>
               <IconButton color='inherit'>
                 <InfoIcon />
               </IconButton>
@@ -95,8 +117,8 @@ const App = (): JSX.Element => {
                 <Dropzone />
               </Box>
             </>
-          ) : data !== undefined ? <DataCardContainer data={data} />
-          : <></>
+          ) : data !== undefined ? <DataCardContainer data={data} handleChange={dataChangeHandler} />
+                : <></>
           }
         </Grid>
       </Grid>

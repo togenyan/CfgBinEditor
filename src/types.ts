@@ -47,10 +47,12 @@ export interface UnknownValue {
   value: number
 }
 
-export type StringTable = Record<number, string>
+export type StringTable = Record<string, string>
 
-export type KeyTable = Record<number, string>
+export type KeyTable = Record<string, string>
 
 export interface Footer {
   unk: number[]
 }
+
+export type RowType = Record<string, number>
