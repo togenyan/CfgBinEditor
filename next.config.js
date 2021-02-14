@@ -1,7 +1,13 @@
 const WorkerPlugin = require('worker-plugin')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
-module.exports = {
+module.exports = withBundleAnalyzer({
   reactStrictMode: true,
+  typescript: {
+    ignoreBuildErrors: true
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     if (!isServer){
       config.plugins.push(
@@ -11,5 +17,5 @@ module.exports = {
       )
     }
     return config
-  }
-}
+  },
+})

@@ -1,8 +1,7 @@
-import { createAsyncThunk, createAction } from '@reduxjs/toolkit'
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { decodeWorker } from './worker'
-
-import type { RowType } from './types'
+import type { CfgBinFile, RowType } from './types'
+import { decodeWorker, encodeWorker } from './worker'
 
 export const loadFile = createAsyncThunk(
   'cfgEditorApp/loadFile',
@@ -11,14 +10,16 @@ export const loadFile = createAsyncThunk(
   }
 )
 
-export const updateCodeGroup = createAction<{ codeGroupIdx: number, rowIdx: number, data: RowType }>(
-  'cfgEditorApp/updateCodeGroup'
-)
+export const updateCodeGroup = createAction<{
+  codeGroupIdx: number
+  rowIdx: number
+  rowData: RowType
+}>('cfgEditorApp/updateCodeGroup')
 
-export const saveFile = createAction<void>(
-  'cfgEditorApp/saveFile'
+export const saveFile = createAsyncThunk(
+  'cfgEditorApp/saveFile',
+  async (data: CfgBinFile) => {
+    return encodeWorker(data)
+  }
 )
-
-export const closeFile = createAction<void>(
-  'cfgEditorApp/closeFile'
-)
+export const closeFile = createAction('cfgEditorApp/closeFile')

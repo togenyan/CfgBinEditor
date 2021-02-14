@@ -32,12 +32,14 @@ const parseCodes = (buf: ArrayBuffer, codeCount: number): CodeGroup[] => {
         const paramType = view.getUint8(pos)
         for (let k = 0; k < 4; k += 1) {
           const tag = (paramType >> (2 * k)) & 3
-          paramTypes.push({
-            0: "string" as const,
-            1: "int" as const,
-            2: "float" as const,
-            3: "unknown" as const,
-          }[tag as 0 | 1 | 2 | 3])
+          paramTypes.push(
+            {
+              0: 'string' as const,
+              1: 'int' as const,
+              2: 'float' as const,
+              3: 'unknown' as const,
+            }[tag as 0 | 1 | 2 | 3]
+          )
         }
       }
       paramTypes.splice(paramCount)
@@ -50,11 +52,13 @@ const parseCodes = (buf: ArrayBuffer, codeCount: number): CodeGroup[] => {
         })
         pos += 4
       }
-      //debugger
-      if (i > 0
-        && (prevParamTypes.length !== paramTypes.length
-          || prevParamTypes.some((val, idx) => val !== paramTypes[idx])
-          || prevCrcValue !== code.crc32)) {
+      // Debugger
+      if (
+        i > 0 &&
+        (prevParamTypes.length !== paramTypes.length ||
+          prevParamTypes.some((val, idx) => val !== paramTypes[idx]) ||
+          prevCrcValue !== code.crc32)
+      ) {
         codeGroups.push({
           crc32: prevCrcValue,
           codes,
@@ -70,7 +74,7 @@ const parseCodes = (buf: ArrayBuffer, codeCount: number): CodeGroup[] => {
       codeGroups.push({
         crc32: prevCrcValue,
         codes,
-        columns: prevParamTypes
+        columns: prevParamTypes,
       })
     }
   }
@@ -83,7 +87,7 @@ const parseStringTable = (buf: ArrayBuffer): StringTable => {
   })
   const arr = new Uint8Array(buf)
   const stringTable: StringTable = {}
-  let strBuf = [] as Array<number>
+  const strBuf = [] as number[]
   let lastOffset = 0
   for (const [idx, val] of arr.entries()) {
     if (val === 0) {
@@ -153,11 +157,13 @@ export const decodeArrayBuffer = (buf: ArrayBuffer): CfgBinFile => {
   const keyTableBlob = buf.slice(keyTableOffset, keyTableOffset + keyTableSize)
   const keyTable = parseKeyTable(keyTableBlob)
 
+  const footerBlob = new Uint8Array(buf.slice(keyTableOffset + keyTableSize))
+
   return {
     header,
     codes,
     stringTable,
-    footer: { unk: [] },
+    footer: { unk: Array.from(footerBlob) },
     keyTable,
   }
 }

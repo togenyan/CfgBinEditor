@@ -28,22 +28,22 @@ export type Value = FloatValue | IntValue | StringPointerValue | UnknownValue
 export type ValueTag = Value['tag']
 
 export interface IntValue {
-  tag: "int"
+  tag: 'int'
   value: number
 }
 
 export interface FloatValue {
-  tag: "float"
+  tag: 'float'
   value: number
 }
 
 export interface StringPointerValue {
-  tag: "string"
+  tag: 'string'
   value: number
 }
 
 export interface UnknownValue {
-  tag: "unknown"
+  tag: 'unknown'
   value: number
 }
 
